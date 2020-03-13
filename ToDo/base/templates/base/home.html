@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% block body_block %}
+  <h1>Welcome</h1>
+  <p> add task</p>
+  <form method="POST" action="{% url "base:index" %}">
+    {% csrf_token %}
+    {{forms.name}}
+    <input class="btn btn-warning" type="submit" name="add task" value="Add">
+  </form>
+  <div class="card " style="width: 30rem;">
+  <ul class="list-group list-group-flush">
+    {% for task in tasks %}
+
+      <li class="list-group-item task">
+      {% if task.done is True%}
+
+        <strike>{{task}}</strike>
+      {% else%}
+        {{task}}
+      {% endif%}
+      <a class="btn btn-outline-primary" href="{% url "base:update" task.id %}">Update</a>
+      <a class="btn btn-outline-danger" href="{% url "base:delete" task.id %}">Delete</a>
+      </li>
+    {% endfor%}
+
+  </ul>
+</div>
+
+{% endblock %}
